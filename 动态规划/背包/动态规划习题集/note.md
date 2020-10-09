@@ -10,6 +10,8 @@
 6.[LeetCode834.树中距离之和](https://leetcode-cn.com/problems/sum-of-distances-in-tree/)
 7.[luogu1725琪露诺](https://www.luogu.com.cn/problem/P1725)
 8.[luogu2170选学霸](https://www.luogu.com.cn/problem/P2170)
+9.[luogu2585三色二叉树](https://www.luogu.com.cn/problem/P2585)
+10.[poj3254Corn Fields](http://poj.org/problem?id=3254)
 ----
 
 
@@ -232,7 +234,7 @@ int main()
 }
 ```
 
-#6.[LeetCode834.树中距离之和](https://leetcode-cn.com/problems/sum-of-distances-in-tree/)
+# 6.[LeetCode834.树中距离之和](https://leetcode-cn.com/problems/sum-of-distances-in-tree/)
 题意为求树上每个点到其他所有点的距离之和。
 设dp[u] 表示节点u到其所有子孙的距离之和，cnt[u] 表示节点u的所有子孙的个数(包括自己)，那么容易得到状态转移方程 $dp[u] = \sum_j dp[j] + cnt[j]$（j是u的儿子）
 在dfs一遍之后，我们就得到root的答案，但是题目要求每个点，我们可以做n遍dfs，但这样时间复杂度就是$N^2$了，不妨利用dp数组来优化：
@@ -313,7 +315,7 @@ public:
 };
 ```
 
-#7.[luogu1725琪露诺](https://www.luogu.com.cn/problem/P1725)
+# 7.[luogu1725琪露诺](https://www.luogu.com.cn/problem/P1725)
 用dp[i]表示走到 i 获得的最大冰冻指数
 那么状态转移方程非常简单： $dp[i] = dp[j] + a[i];  i-r <= j <= i-l$
 状态数有N个，状态转移是O(N)的，根据这题的数据范围来看$N^2$肯定是超时的，所以需要优化一下。
@@ -424,6 +426,139 @@ int main()
     }
     if(ans==1e9) cout<<0<<endl;
     else cout<<res;
+    return 0;
+}
+```
+# 9.[luogu2585三色二叉树](https://www.luogu.com.cn/problem/P2585)
+树上dp，这题可以不建树，如果建树的话因为是二叉树，所以可以使用邻接矩阵，然后自底向上递归一遍就行，递归的过程中更新dp数组和np数组，两个数组的定义见注释。
+```
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int N = 5e5+100, M = 2*N;
+string s;
+int cnt;
+int g[N][2];  //邻接矩阵存树
+int dp[N][3], np[N][3];
+//dp[i][0] 表示以i为根的树，当节点i染成绿色时这棵树绿色点的最大值, 1代表蓝2代表红
+//np[i][0] 表示以i为根的树，当节点i染成绿色时这棵树绿色点的最小值
+
+
+int build(){
+    int now = ++cnt;
+    if(s[now] == '1'){
+        g[now][0] = build();
+    }else if(s[now] == '2'){
+        g[now][0] = build();
+        g[now][1] = build();
+    }
+    return now;
+}
+
+void dfs(int u){
+    int l = g[u][0], r = g[u][1];
+    
+    if(l) dfs(l);
+    if(r) dfs(r);
+    
+    if(l==0 && r==0){
+        dp[u][0] = 1;
+        np[u][0] = 1;
+    }
+    dp[u][0] = max(dp[l][1]+dp[r][2], dp[r][1]+dp[l][2])+1;  //左蓝右红 或者左红右蓝  + 1棵绿树
+    dp[u][1] = max(dp[l][0]+dp[r][2], dp[l][2]+dp[r][0]);
+    dp[u][2] = max(dp[l][0]+dp[r][1], dp[l][1]+dp[r][0]);
+    np[u][0] = min(np[l][1]+np[r][2], np[r][1]+np[l][2])+1;
+    np[u][1] = min(np[l][0]+np[r][2], np[l][2]+np[r][0]);
+    np[u][2] = min(np[l][0]+np[r][1], np[l][1]+np[r][0]);
+}
+int main()
+{
+    cin>>s;
+    s = " " + s;
+    
+    build();
+    dfs(1);
+    
+    cout<<dp[1][0]<<" "<<min(np[1][1],min(np[1][0],np[1][2]));
+    
+    return 0;
+}
+```
+# 10.[poj3254Corn Fields](http://poj.org/problem?id=3254)
+状态压缩DP， 对于地图，用二进制表示每个格子是否可以放牧，对于方案，用二进制1表示某个格子是否放牛，然后一层一层扩展即可。
+$dp[i][j] += dp[i-1][k]; $
+（状态j和状态k不冲突且均合法）
+```
+#include <iostream>
+#include <cstring>
+#include <cstdio>
+
+using namespace std;
+
+const int N = 15, M = 1<<N, mod = 100000000;
+
+int dp[N][M];
+int st[M], g[M];   //st存放合法方案， g存放地图
+int n,m;
+
+//检查同一行中是否有相邻的
+bool check_row(int u){
+    return !(u&(u<<1));
+}
+
+//检查某个方案在地图中是否合法
+bool check_g(int x,int u){
+    return !(g[x]&st[u]);
+}
+int main()
+{
+    cin>>n>>m;
+    
+    for(int i = 1; i<=n; i++){
+        for(int j = 1; j<=m; j++){
+            int a;
+            cin>>a;
+            if(!a) g[i] += (1<<(j-1));
+        }
+    }
+    
+    int cnt = 0;  //合法方案的数量
+    for(int i = 0; i<1<<m; i++){
+        if(check_row(i)){
+            st[cnt++] = i;
+        }
+    }
+    
+    //初始化第一层
+    for(int i = 0; i<cnt; i++){
+        if(check_g(1,i)){
+            dp[1][i] = 1;
+        }
+    }
+    
+    for(int i = 2; i<=n; i++){
+        for(int j = 0; j<cnt; j++){
+            //枚举第i层的状态
+            if(check_g(i,j)){
+                for(int k = 0; k<cnt; k++){
+                    if(check_g(i-1,k)){
+                        if(!(st[j]&st[k])){
+                            dp[i][j] += dp[i-1][k];
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    int ans = 0;
+    for(int i = 0; i<cnt; i++){
+        ans += dp[n][i];
+        ans %= mod;
+    }
+    cout<<ans;
     return 0;
 }
 ```
