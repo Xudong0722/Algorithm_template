@@ -7,14 +7,17 @@
 [cf tool github](https://github.com/xalanq/cf-tool#installation)
 [cf tool 配置](http://www.mamicode.com/info-detail-2873321.html)
 
+
+
 cf思维题刷题数：8
+
 2020 /10/13 
-(1422)codeforces675div2 A，B done~ 
-(1417)codeforces673div2 A，B done~
+- (1422)codeforces675div2 A，B done~ 
+- (1417)codeforces673div2 A，B done~
 
-2020/10/14
-(1407)codeforces669 div2 A, done~
+-2020/10/14
+- (1407)codeforces669 div2 A, done~
 
-2020/10/15
-(1407)codeforces669 div2 B,done~
-(1426)codeforces674 div2 A, Bdone~
+-2020/10/15
+- (1407)codeforces669 div2 B,done~
+- (1426)codeforces674 div2 A, Bdone~
