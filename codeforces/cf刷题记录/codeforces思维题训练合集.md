@@ -31,3 +31,6 @@ cf思维题刷题数：17
 
 2020/10/20
 - (1419) codeforces 671 div2 A, C,D1, D2 done~
+
+2020/10/21
+- (1433) codeforces 677 div3 A done~
