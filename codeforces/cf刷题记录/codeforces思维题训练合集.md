@@ -9,7 +9,7 @@
 
 
 
-cf思维题刷题数：21
+cf思维题刷题数：22
 
 2020 /10/13 
 - (1422)codeforces675div2 A,B,done~ 
@@ -33,4 +33,4 @@ cf思维题刷题数：21
 - (1419) codeforces 671 div2 A, C,D1, D2 done~
 
 2020/10/21
-- (1433) codeforces 677 div3 A,B,C,Ddone~
+- (1433) codeforces 677 div3 A,B,C,D,Gdone~
