@@ -9,7 +9,7 @@
 
 
 
-cf思维题刷题数：27
+cf思维题刷题数：31
 
 2020 /10/13 
 - (1422)codeforces675div2 A,B,done~ 
@@ -43,4 +43,7 @@ cf思维题刷题数：27
 
 2020/10/27
 - (1436) codeforces 678 div2 A,B done~
-- (1430) codeforces [Educational Codeforces Round 96] div2 A,B,C done~
+- (1430) codeforces Educational Codeforces Round 96 div2 A,B,C done~
+
+2020/10/29
+- (1437) codeforces Educational Codeforces Round 97 div2 A,B,C,D done~
