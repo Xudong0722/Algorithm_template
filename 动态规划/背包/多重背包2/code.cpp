@@ -14,27 +14,20 @@ int main()
 {
     cin>>n>>m;
     
-    int idx = 0;
-    for(int i = 1; i<=n ;i++)
-    {
+    int idx = 1;
+    for(int i = 1; i<=n; i++){
         int a,b,s;
         cin>>a>>b>>s;
         
-        int k = 1; 
-        while(k<=s)
-        {
-            idx++;
-            v[idx] = a * k;
-            w[idx] = b * k;
-            s-=k;
-            k<<=1;
+        int t = 1;
+        while(t<s){
+            w[idx] = t*b;
+            v[idx++] = t*a;
+            s -= t;
+            t<<=1;
         }
-        if(s>0)
-        {
-            idx++;
-            w[idx] = b * s;
-            v[idx] = a * s;
-        }
+        w[idx] = s*b;
+        v[idx++] = s*a;
     }
     
     n = idx; //组数
